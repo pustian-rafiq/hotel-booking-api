@@ -1,6 +1,7 @@
 import express  from "express";
 import dotenv from 'dotenv'
 import mongoose from "mongoose";
+import cookieParser from 'cookie-parser'
 
 //import routes here
 import authRoutes from "./routes/auth.js"
@@ -30,6 +31,9 @@ mongoose.connection.on("connected",()=> {
 })
 //Use this middleware for sending json object
 app.use(express.json())
+app.use(cookieParser())
+
+
 //use middleware
 app.use("/api/auth", authRoutes);
 app.use("/api/users", usersRoutes);
@@ -40,7 +44,7 @@ app.use("/api/rooms", roomsRoutes);
 app.use((err, req, res, next) => {
     const errorStatus = err.status || 500;
     const errorMessage = err.message || "Something went wrong!";
-    
+
     return res.status(errorStatus).json({
       success: false,
       status: errorStatus,

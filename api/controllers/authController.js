@@ -1,7 +1,7 @@
 import User from "../models/user.js"
 import bcrypt from 'bcryptjs'
 import { createError } from "../utils/error.js";
-
+import jwt from "jsonwebtoken"
 //Register
 export const registerUserController = async (req, res, next) => {
 
@@ -36,9 +36,15 @@ export const loginUserController = async (req, res, next) => {
        if(!isPasswordCorrect){
         return next(createError(404,"Username or password not found "))
        }
+       const token = jwt.sign({id:user._id, isAdmin: user.isAdmin}, process.env.SECRET_KEY);
+
        //ekhane user._doc theke password and isAdmin k bad dia baki data gulo show korbe otherDetails er vitore
        const {password, isAdmin, ...otherDetails} = user._doc;
-       res.status(200).json(  {...otherDetails})
+
+       res.cookie("access_token", token,{
+        httpOnly: true
+       }).status(200).json(  {...otherDetails})
+
         // res.status(200).json({
         //     "message": "Login successfull",
         //     "user": user

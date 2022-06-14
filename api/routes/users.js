@@ -1,10 +1,19 @@
 import express from 'express'
+import { deleteUserController, getUserController, getUsersController, updateUserController } from '../controllers/userController.js';
 
 const router = express.Router();
 
-//auth routes here
-router.get("/", (req,res)=> {
-    res.send("This is user endpoint");
-})
+//Update
+router.put("/:id", updateUserController)
+
+//Delete
+router.delete("/:id", deleteUserController)
+
+//Get Single
+
+router.get("/:id", getUserController)
+
+//Get All
+router.get("/", getUsersController)
 
 export default router
