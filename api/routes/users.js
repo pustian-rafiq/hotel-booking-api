@@ -1,10 +1,10 @@
 import express from 'express'
-import { createUserController } from '../controllers/userController.js';
 
 const router = express.Router();
 
-//User routes here
-//register new user
-router.post("/register", createUserController)
+//auth routes here
+router.get("/", (req,res)=> {
+    res.send("This is user endpoint");
+})
 
 export default router
