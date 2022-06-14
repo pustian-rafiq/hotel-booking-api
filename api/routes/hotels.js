@@ -1,77 +1,26 @@
 import express from 'express'
-import Hotel from "../models/hotel.js"
+import { createHotelController, deleteHotelController, getAllHotelController, getSingleHotelController, updateHotelController } from '../controllers/hotelController.js';
+
 
 const router = express.Router();
 
 //Hotel routes here
 
 //Create
-router.post("/", async (req,res)=> {
-    const newHotel = new Hotel(req.body);
-
-    try{
-        const savedHotel = await newHotel.save()
-        res.status(200).json(savedHotel);
-    }catch(err){
-        res.status(500).json("Something wrong");
-    }
-   
-})
+router.post("/", createHotelController)
 
 //Update
-router.put("/:id", async (req,res)=> {
-    const newHotel = new Hotel(req.body);
-
-    try{
-        const updatedHotel = await Hotel.findByIdAndUpdate(
-            req.params.id,
-            {
-                $set: req.body
-            },
-            {
-                new: true
-            }
-        )
-        res.status(200).json(updatedHotel);
-    }catch(err){
-        res.status(500).json("Something wrong");
-    }
-   
-})
+router.put("/:id", updateHotelController)
 
 //Delete
-router.delete("/:id", async (req,res)=> {
-    try{
-        await Hotel.findByIdAndDelete(
-            req.params.id,  
-        )
-        res.status(200).json("Hotel deleted successfully");
-    }catch(err){
-        res.status(500).json("Something wrong");
-    }  
-})
+router.delete("/:id", deleteHotelController)
 
 //Get Single
 
-router.get("/:id", async (req,res)=> {
-    try{
-       const hotel = await Hotel.findById(
-            req.params.id  
-        )
-        res.status(200).json({hotel});
-    }catch(err){
-        res.status(500).json("Something wrong");
-    }  
-})
+router.get("/:id", getSingleHotelController)
 
 //Get All
-router.get("/", async (req,res)=> {
-    try{
-       const hotels = await Hotel.find()
-        res.status(200).json({hotels});
-    }catch(err){
-        res.status(500).json("Something wrong");
-    }  
-})
+router.get("/", getAllHotelController)
+
 
 export default router
