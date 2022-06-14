@@ -1,14 +1,15 @@
 import User from "../models/user.js"
+import bcrypt from 'bcryptjs'
 
+export const createUserController = async (req, res, next) => {
 
-
-export const createUserController = async (req,res,next) => {
- 
-    try{
+    try {
+        var salt = bcrypt.genSaltSync(10);
+        var hash = bcrypt.hashSync(req.body.password, salt);
         const newUser = new User({
             username: req.body.username,
             email: req.body.email,
-            password: req.body.password,
+            password: hash ,
         })
         await newUser.save();
         res.status(201).json({
@@ -16,7 +17,7 @@ export const createUserController = async (req,res,next) => {
             "data": newUser
         })
 
-    }catch(err){
+    } catch (err) {
         next(err)
     }
 }
