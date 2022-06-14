@@ -1,5 +1,6 @@
 import express from 'express'
 import { createHotelController, deleteHotelController, getAllHotelController, getSingleHotelController, updateHotelController } from '../controllers/hotelController.js';
+import { verifyAdmin } from '../utils/verifyToken.js';
 
 
 const router = express.Router();
@@ -7,13 +8,13 @@ const router = express.Router();
 //Hotel routes here
 
 //Create
-router.post("/", createHotelController)
+router.post("/",verifyAdmin, createHotelController)
 
 //Update
-router.put("/:id", updateHotelController)
+router.put("/:id",verifyAdmin, updateHotelController)
 
 //Delete
-router.delete("/:id", deleteHotelController)
+router.delete("/:id",verifyAdmin, deleteHotelController)
 
 //Get Single
 

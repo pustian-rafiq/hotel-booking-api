@@ -18,6 +18,6 @@ router.delete("/:id",verifyUser, deleteUserController)
 router.get("/:id",verifyUser, getUserController)
 
 //Get All
-router.get("/", verifyAdmin,  getUsersController)
+router.get("/",  getUsersController)
 
 export default router
