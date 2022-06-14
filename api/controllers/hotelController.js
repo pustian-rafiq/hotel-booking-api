@@ -1,20 +1,20 @@
 import Hotel from "../models/hotel.js"
 
 //Create hotel controller
-export const createHotelController = async (req, res) => {
+export const createHotelController = async (req, res, next) => {
     const newHotel = new Hotel(req.body);
 
     try {
         const savedHotel = await newHotel.save()
         res.status(200).json(savedHotel);
     } catch (err) {
-        res.status(500).json("Something wrong");
+        next(err); //This error goes to next middleware in the index.js.
     }
 
 }
 
 //Update hotel controller
-export const updateHotelController = async (req, res) => {
+export const updateHotelController = async (req, res,next) => {
     const newHotel = new Hotel(req.body);
 
     try {
@@ -29,39 +29,39 @@ export const updateHotelController = async (req, res) => {
         )
         res.status(200).json(updatedHotel);
     } catch (err) {
-        res.status(500).json("Something wrong");
+        next(err); //This error goes to next middleware in the index.js.
     }
 }
 //Delete hotel controller
-export const deleteHotelController = async (req, res) => {
+export const deleteHotelController = async (req, res,next) => {
     try {
         await Hotel.findByIdAndDelete(
             req.params.id,
         )
         res.status(200).json("Hotel deleted successfully");
     } catch (err) {
-        res.status(500).json("Something wrong");
+        next(err);
     }
 }
 
 //Get single hotel controller
-export const getSingleHotelController = async (req, res) => {
+export const getSingleHotelController = async (req, res, next) => {
     try {
         const hotel = await Hotel.findById(
             req.params.id
         )
         res.status(200).json({ hotel });
     } catch (err) {
-        res.status(500).json("Something wrong");
+        next(err);
     }
 }
 
 //Get all hotel controller
-export const getAllHotelController = async (req, res) => {
+export const getAllHotelController = async (req, res, next) => {
     try {
         const hotels = await Hotel.find()
         res.status(200).json({ hotels });
     } catch (err) {
-        res.status(500).json("Something wrong");
+        next(err);
     }
 }
