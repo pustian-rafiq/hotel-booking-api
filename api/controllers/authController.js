@@ -36,11 +36,13 @@ export const loginUserController = async (req, res, next) => {
        if(!isPasswordCorrect){
         return next(createError(404,"Username or password not found "))
        }
-        res.status(200).json({
-            "message": "Login successfull",
-            "user": user
-        })
-
+       //ekhane user._doc theke password and isAdmin k bad dia baki data gulo show korbe otherDetails er vitore
+       const {password, isAdmin, ...otherDetails} = user._doc;
+       res.status(200).json(  {...otherDetails})
+        // res.status(200).json({
+        //     "message": "Login successfull",
+        //     "user": user
+        // })
     } catch (err) {
         next(err)
     }
