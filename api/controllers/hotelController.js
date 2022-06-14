@@ -6,7 +6,7 @@ export const createHotelController = async (req, res, next) => {
 
     try {
         const savedHotel = await newHotel.save()
-        res.status(200).json(savedHotel);
+        res.status(201).json(savedHotel);
     } catch (err) {
         next(err); //This error goes to next middleware in the index.js.
     }

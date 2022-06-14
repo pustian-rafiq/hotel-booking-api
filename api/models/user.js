@@ -13,18 +13,18 @@ const userSchema = new mongoose.Schema(
     },
     country: {
       type: String,
-      required: true,
+    //   required: true,
     },
     img: {
       type: String,
     },
     city: {
       type: String,
-      required: true,
+    //   required: true,
     },
     phone: {
       type: String,
-      required: true,
+    //   required: true,
     },
     password: {
       type: String,
@@ -38,4 +38,4 @@ const userSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-export default mongoose.model("User", UserSchema);
+export default mongoose.model("User", userSchema);
