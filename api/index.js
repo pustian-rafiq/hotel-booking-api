@@ -28,7 +28,8 @@ mongoose.connection.on("disconnected",()=> {
 mongoose.connection.on("connected",()=> {
     console.log("Mongodb connected");
 })
-
+//Use this middleware for sending json object
+app.use(express.json())
 //use middleware
 app.use("/api/auth", authRoutes);
 app.use("/api/users", usersRoutes);
